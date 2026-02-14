@@ -20,6 +20,9 @@ public class CharacterSelectUI : MonoBehaviour
 
     public void ShowCharacter(int index)
     {
+        if (characters == null || index < 0 || index >= characters.Length)
+            return;
+
         CharacterInfo c = characters[index];
 
         nameText.text = c.characterName;
@@ -31,8 +34,13 @@ public class CharacterSelectUI : MonoBehaviour
 
     public void SelectCharacter(int index)
     {
+        if (index < 0 || (characters != null && index >= characters.Length))
+            return;
+
         // Disable previous outline
-        if (currentSelectedIndex >= 0 && currentSelectedIndex < characterUIObjects.Length)
+        if (characterUIObjects != null &&
+            currentSelectedIndex >= 0 &&
+            currentSelectedIndex < characterUIObjects.Length)
         {
             Outline oldOutline = characterUIObjects[currentSelectedIndex].GetComponent<Outline>();
             if (oldOutline != null)
@@ -40,9 +48,12 @@ public class CharacterSelectUI : MonoBehaviour
         }
 
         // Enable new outline
-        Outline newOutline = characterUIObjects[index].GetComponent<Outline>();
-        if (newOutline != null)
-            newOutline.enabled = true;
+        if (characterUIObjects != null && index < characterUIObjects.Length)
+        {
+            Outline newOutline = characterUIObjects[index].GetComponent<Outline>();
+            if (newOutline != null)
+                newOutline.enabled = true;
+        }
 
         currentSelectedIndex = index;
     }
@@ -55,6 +66,17 @@ public class CharacterSelectUI : MonoBehaviour
     // Upon confirming the character
     public void StartGame()
     {
+        if (characters != null && characters.Length > 0)
+        {
+            int selectedIndex = currentSelectedIndex < 0 ? 0 : currentSelectedIndex;
+            selectedIndex = Mathf.Clamp(selectedIndex, 0, characters.Length - 1);
+            SelectedCharacterState.SetSelection(characters[selectedIndex]);
+        }
+        else
+        {
+            SelectedCharacterState.SetSelection(null);
+        }
+
         SceneManager.LoadScene(sceneName);
     }
 }

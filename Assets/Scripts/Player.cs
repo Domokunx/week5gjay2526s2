@@ -9,6 +9,9 @@ public class Player : MonoBehaviour
     
     [SerializeField] private InputActionAsset actionAsset;
     private InputActionMap movementMap;
+    private InputAction moveAction;
+    private InputAction jumpAction;
+    private InputAction attackAction;
 
     private Vector2 _movementVec;
     
@@ -22,6 +25,11 @@ public class Player : MonoBehaviour
     private bool _isGrounded;
     private bool _hasDashed;
     private bool _hasJumped;
+
+    [Header("Weapons")]
+    [SerializeField] private SwordWeapon? swordWeapon;
+    [SerializeField] private GunWeapon? gunWeapon;
+    private IWeapon? currentWeapon;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -29,12 +37,26 @@ public class Player : MonoBehaviour
         movementMap = actionAsset.FindActionMap("Player");
         _collider = GetComponent<BoxCollider2D>();
         _rigidbody = GetComponent<Rigidbody2D>();
+
+        if (movementMap != null)
+        {
+            moveAction = movementMap.FindAction("Move");
+            jumpAction = movementMap.FindAction("Jump");
+            attackAction = movementMap.FindAction("Attack");
+            movementMap.Enable();
+        }
+
+        WeaponType weaponToEquip = SelectedCharacterState.HasSelection
+            ? SelectedCharacterState.StartingWeapon
+            : WeaponType.Sword;
+
+        EquipWeapon(weaponToEquip);
     }
 
     void Update()
     {
-        _movementVec = movementMap.FindAction("Move").ReadValue<Vector2>();
-        _hasJumped = movementMap.FindAction("Jump").IsPressed();
+        _movementVec = moveAction != null ? moveAction.ReadValue<Vector2>() : Vector2.zero;
+        _hasJumped = jumpAction != null && jumpAction.IsPressed();
 
         _canMove = true;
         _isGrounded = IsGrounded();
@@ -51,6 +73,11 @@ public class Player : MonoBehaviour
         if (_hasJumped)
         {
             Jump();
+        }
+
+        if (attackAction != null && attackAction.WasPressedThisFrame())
+        {
+            currentWeapon?.Attack();
         }
     }
 
@@ -73,9 +100,37 @@ public class Player : MonoBehaviour
         _rigidbody.linearVelocity += Vector2.up * jumpForce;
     }
 
+    private void EquipWeapon(WeaponType weaponType)
+    {
+        if (swordWeapon != null)
+            swordWeapon.gameObject.SetActive(weaponType == WeaponType.Sword);
+
+        if (gunWeapon != null)
+            gunWeapon.gameObject.SetActive(weaponType == WeaponType.Guns);
+
+        if (weaponType == WeaponType.Guns && gunWeapon != null)
+        {
+            currentWeapon = gunWeapon;
+            return;
+        }
+
+        if (weaponType == WeaponType.Sword && swordWeapon != null)
+        {
+            currentWeapon = swordWeapon;
+            return;
+        }
+
+        currentWeapon = swordWeapon != null ? swordWeapon : gunWeapon;
+    }
+
     bool IsGrounded()
     {
         return _rigidbody.linearVelocityY == 0 && 
                Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, groundCheckDist);
+    }
+
+    private void OnDisable()
+    {
+        movementMap?.Disable();
     }
 }
