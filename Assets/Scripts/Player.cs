@@ -23,7 +23,6 @@ public class Player : MonoBehaviour
     private bool _hasDashed;
     private bool _hasJumped;
     
-    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -49,7 +48,7 @@ public class Player : MonoBehaviour
             MoveX(0);
         }
 
-        if (_hasJumped && _rigidbody.linearVelocityY == 0)
+        if (_hasJumped)
         {
             Jump();
         }

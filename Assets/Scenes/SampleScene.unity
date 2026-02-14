@@ -647,7 +647,7 @@ TilemapCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_CompositeOperation: 0
+  m_CompositeOperation: 1
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
@@ -691,9 +691,35 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths: []
+  m_ColliderPaths:
+  - m_Collider: {fileID: 437236750}
+    m_ColliderPaths:
+    - - X: 90000000
+        Y: -10000000
+      - X: 80000000
+        Y: -10000000
+      - X: 80000000
+        Y: 10000000
+      - X: 70000000
+        Y: 10000000
+      - X: 70000000
+        Y: -10000000
+      - X: -70000000
+        Y: -10000000
+      - X: -70000000
+        Y: -30000000
+      - X: 90000000
+        Y: -30000000
   m_CompositePaths:
-    m_Paths: []
+    m_Paths:
+    - - {x: 8.99997, y: -3}
+      - {x: 8.99997, y: -1}
+      - {x: 8, y: -0.9999706}
+      - {x: 7.9999704, y: 1}
+      - {x: 7, y: 0.99997073}
+      - {x: 6.9999704, y: -1}
+      - {x: -7, y: -1.0000293}
+      - {x: -6.9999704, y: -3}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -1129,7 +1155,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &659071551
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1192,6 +1218,7 @@ MonoBehaviour:
   movementSpeed: 5
   jumpForce: 5
   dashSpeed: 20
+  groundCheckDist: 0.2
 --- !u!212 &659071553
 SpriteRenderer:
   serializedVersion: 2
@@ -1260,7 +1287,7 @@ Transform:
   m_GameObject: {fileID: 659071549}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.83391, y: 0.3, z: 0}
+  m_LocalPosition: {x: 2.83391, y: -0.41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
