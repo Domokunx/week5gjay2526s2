@@ -8,8 +8,7 @@ public class Player : MonoBehaviour
     
     [SerializeField] private InputActionAsset actionAsset;
     public LayerMask groundLayer;
-    public Transform shootPointLeft;
-    public Transform shootPointRight;
+    public Transform shootPoint;
     
     private InputActionMap movementMap;
     private InputAction moveAction;
@@ -73,9 +72,11 @@ public class Player : MonoBehaviour
         if (_movementVec.x > 0)
         {
             isFacingRight = true;
+            transform.rotation = Quaternion.Euler(0, 180, 0);
         } else if (_movementVec.x < 0)
         {
             isFacingRight = false;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
             
         
