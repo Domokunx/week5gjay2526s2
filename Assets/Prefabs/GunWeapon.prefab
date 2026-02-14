@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2805453846420653220
 Transform:
   m_ObjectHideFlags: 0
@@ -44,3 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd53f5b75bbad4a789dfa0aacdf60b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GunWeapon
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 8
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
+  damage: 30
