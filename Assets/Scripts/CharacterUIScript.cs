@@ -12,12 +12,46 @@ public class CharacterSelectUI : MonoBehaviour
 
     public CharacterInfo[] characters;
 
-    // Assign the UI objects for each character (must have Outline component)
-    public GameObject[] characterUIObjects;
+    // Assign in index order (Character1_Arrow, Character2_Arrow, etc.)
+    public GameObject[] characterArrows;
 
     private int currentSelectedIndex = -1;
 
     private string sceneName = "SampleScene";
+
+    private const string Character1ArrowName = "Character1_Arrow";
+    private const string Character2ArrowName = "Character2_Arrow";
+
+    private void Start()
+    {
+        TryAutoBindArrows();
+
+        if (characters != null && characters.Length > 0)
+            ShowCharacter(0);
+    }
+
+    private void TryAutoBindArrows()
+    {
+        bool hasAssignedArrow = false;
+        if (characterArrows != null)
+        {
+            for (int i = 0; i < characterArrows.Length; i++)
+            {
+                if (characterArrows[i] != null)
+                {
+                    hasAssignedArrow = true;
+                    break;
+                }
+            }
+        }
+
+        if (hasAssignedArrow)
+            return;
+
+        characterArrows = new GameObject[2];
+        characterArrows[0] = GameObject.Find(Character1ArrowName);
+        characterArrows[1] = GameObject.Find(Character2ArrowName);
+    }
 
     private void Update()
     {
@@ -74,22 +108,13 @@ public class CharacterSelectUI : MonoBehaviour
         if (index < 0 || (characters != null && index >= characters.Length))
             return;
 
-        // Disable previous outline
-        if (characterUIObjects != null &&
-            currentSelectedIndex >= 0 &&
-            currentSelectedIndex < characterUIObjects.Length)
+        if (characterArrows != null)
         {
-            Outline oldOutline = characterUIObjects[currentSelectedIndex].GetComponent<Outline>();
-            if (oldOutline != null)
-                oldOutline.enabled = false;
-        }
-
-        // Enable new outline
-        if (characterUIObjects != null && index < characterUIObjects.Length)
-        {
-            Outline newOutline = characterUIObjects[index].GetComponent<Outline>();
-            if (newOutline != null)
-                newOutline.enabled = true;
+            for (int i = 0; i < characterArrows.Length; i++)
+            {
+                if (characterArrows[i] != null)
+                    characterArrows[i].SetActive(i == index);
+            }
         }
 
         currentSelectedIndex = index;
