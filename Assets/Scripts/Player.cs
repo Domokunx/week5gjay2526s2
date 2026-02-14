@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
         
         if (_movementVec.x != 0)
         {
+            // Add check for wall later (prevent stuck on wall)
             MoveX(_movementVec.x);
         }
         else
@@ -72,6 +73,7 @@ public class Player : MonoBehaviour
 
         if (_hasJumped)
         {
+            // Add isgrounded check later (buggy??)
             Jump();
         }
 
@@ -79,12 +81,6 @@ public class Player : MonoBehaviour
         {
             currentWeapon?.Attack();
         }
-    }
-
-    void FixedUpdate()
-    {
-
-        
     }
 
     private void MoveX(float movementVecX)
