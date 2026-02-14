@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class CharacterSelectUI : MonoBehaviour
 {
@@ -17,6 +18,42 @@ public class CharacterSelectUI : MonoBehaviour
     private int currentSelectedIndex = -1;
 
     private string sceneName = "SampleScene";
+
+    private void Update()
+    {
+        if (characters == null || characters.Length == 0)
+            return;
+
+        var keyboard = Keyboard.current;
+        if (keyboard == null)
+            return;
+
+        if (keyboard.rightArrowKey.wasPressedThisFrame || keyboard.dKey.wasPressedThisFrame)
+        {
+            int nextIndex = GetCycledIndex(1);
+            ShowCharacter(nextIndex);
+        }
+        else if (keyboard.leftArrowKey.wasPressedThisFrame || keyboard.aKey.wasPressedThisFrame)
+        {
+            int nextIndex = GetCycledIndex(-1);
+            ShowCharacter(nextIndex);
+        }
+    }
+
+    private int GetCycledIndex(int direction)
+    {
+        if (currentSelectedIndex < 0)
+            return direction > 0 ? 0 : characters.Length - 1;
+
+        int nextIndex = currentSelectedIndex + direction;
+
+        if (nextIndex >= characters.Length)
+            nextIndex = 0;
+        else if (nextIndex < 0)
+            nextIndex = characters.Length - 1;
+
+        return nextIndex;
+    }
 
     public void ShowCharacter(int index)
     {
