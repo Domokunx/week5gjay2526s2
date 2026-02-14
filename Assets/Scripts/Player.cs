@@ -8,8 +8,8 @@ public class Player : MonoBehaviour
     
     [SerializeField] private InputActionAsset actionAsset;
     public LayerMask groundLayer;
-    public Transform shootPointLeft;
-    public Transform shootPointRight;
+    public Transform shootPoint;
+    public Transform groundCheck;
     
     private InputActionMap movementMap;
     private InputAction moveAction;
@@ -73,9 +73,11 @@ public class Player : MonoBehaviour
         if (_movementVec.x > 0)
         {
             isFacingRight = true;
+            transform.rotation = Quaternion.Euler(0, 180, 0);
         } else if (_movementVec.x < 0)
         {
             isFacingRight = false;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
             
         
@@ -143,7 +145,7 @@ public class Player : MonoBehaviour
     bool IsGrounded()
     {
         _rigidbody.gravityScale = 0;
-        return Physics2D.Raycast(transform.position, Vector2.down, groundCheckDist, groundLayer);
+        return Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDist, groundLayer);
     }
 
     private void OnDisable()

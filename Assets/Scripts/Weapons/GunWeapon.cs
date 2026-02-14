@@ -10,7 +10,7 @@ public class GunWeapon : WeaponBase
     public override void Attack(Player attacker)
     {
         RaycastHit2D hit = Physics2D.Raycast(
-            attacker.isFacingRight ? attacker.shootPointRight.position : attacker.shootPointLeft.position, 
+            attacker.shootPoint.position, 
             attacker.isFacingRight ? Vector2.right : Vector2.left,
             Mathf.Infinity,
             enemyMask | groundMask);
