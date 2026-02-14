@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8982333195401630001}
   m_Layer: 3
   m_Name: Enemy 1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,8 +106,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 089174e8dec37054ca3294ff0123e4f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   health: 100
-  movementSpeed: 4
+  movementSpeed: 2
   jumpForce: 5
 --- !u!61 &2128549334697738777
 BoxCollider2D:

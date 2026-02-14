@@ -6,14 +6,19 @@ public class Player : MonoBehaviour
     private BoxCollider2D _collider;
     private Rigidbody2D _rigidbody;
     
-    
     [SerializeField] private InputActionAsset actionAsset;
+    public LayerMask groundLayer;
+    public Transform shootPointLeft;
+    public Transform shootPointRight;
+    
     private InputActionMap movementMap;
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction attackAction;
+    
 
     private Vector2 _movementVec;
+    [HideInInspector] public bool isFacingRight = true;
     
     [Header("Movement Settings")]
     [SerializeField] private float movementSpeed = 5f;
@@ -25,6 +30,7 @@ public class Player : MonoBehaviour
     private bool _isGrounded;
     private bool _hasDashed;
     private bool _hasJumped;
+    private bool _hasAttacked;
 
     [Header("Weapons")]
     [SerializeField] private SwordWeapon? swordWeapon;
@@ -43,6 +49,7 @@ public class Player : MonoBehaviour
             moveAction = movementMap.FindAction("Move");
             jumpAction = movementMap.FindAction("Jump");
             attackAction = movementMap.FindAction("Attack");
+            attackAction.performed += Attack;
             movementMap.Enable();
         }
 
@@ -55,11 +62,23 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        _movementVec = moveAction != null ? moveAction.ReadValue<Vector2>() : Vector2.zero;
+        _movementVec = moveAction?.ReadValue<Vector2>() ?? Vector2.zero;
         _hasJumped = jumpAction != null && jumpAction.IsPressed();
-
         _canMove = true;
         _isGrounded = IsGrounded();
+        
+        _rigidbody.gravityScale = _isGrounded ? 0 : 1;
+        
+        // Facing
+        if (_movementVec.x > 0)
+        {
+            isFacingRight = true;
+        } else if (_movementVec.x < 0)
+        {
+            isFacingRight = false;
+        }
+            
+        
         
         if (_movementVec.x != 0)
         {
@@ -71,18 +90,18 @@ public class Player : MonoBehaviour
             MoveX(0);
         }
 
-        if (_hasJumped)
+        if (_hasJumped && _isGrounded)
         {
             // Add isgrounded check later (buggy??)
             Jump();
         }
-
-        if (attackAction != null && attackAction.WasPressedThisFrame())
-        {
-            currentWeapon?.Attack();
-        }
     }
 
+    private void Attack(InputAction.CallbackContext obj)
+    {
+        currentWeapon?.Attack(this);
+    }
+    
     private void MoveX(float movementVecX)
     {
         if (!_canMove) return;
@@ -92,6 +111,8 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
+        _isGrounded = false;
+        
         _rigidbody.linearVelocity = new Vector2(_rigidbody.linearVelocity.x, 0);
         _rigidbody.linearVelocity += Vector2.up * jumpForce;
     }
@@ -121,12 +142,14 @@ public class Player : MonoBehaviour
 
     bool IsGrounded()
     {
-        return _rigidbody.linearVelocityY == 0 && 
-               Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, groundCheckDist);
+        _rigidbody.gravityScale = 0;
+        return Physics2D.Raycast(transform.position, Vector2.down, groundCheckDist, groundLayer);
     }
 
     private void OnDisable()
     {
         movementMap?.Disable();
     }
+    
+    
 }
