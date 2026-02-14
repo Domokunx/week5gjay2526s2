@@ -33,9 +33,7 @@ public class Player : MonoBehaviour
     private bool _hasAttacked;
 
     [Header("Weapons")]
-    [SerializeField] private SwordWeapon? swordWeapon;
-    [SerializeField] private GunWeapon? gunWeapon;
-    private IWeapon? currentWeapon;
+    [SerializeField] private WeaponBase weapon;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -52,12 +50,6 @@ public class Player : MonoBehaviour
             attackAction.performed += Attack;
             movementMap.Enable();
         }
-
-        WeaponType weaponToEquip = SelectedCharacterState.HasSelection
-            ? SelectedCharacterState.StartingWeapon
-            : WeaponType.Sword;
-
-        EquipWeapon(weaponToEquip);
     }
 
     void Update()
@@ -101,7 +93,7 @@ public class Player : MonoBehaviour
 
     private void Attack(InputAction.CallbackContext obj)
     {
-        currentWeapon?.Attack(this);
+        weapon?.Attack(this);
     }
     
     private void MoveX(float movementVecX)
@@ -117,29 +109,6 @@ public class Player : MonoBehaviour
         
         _rigidbody.linearVelocity = new Vector2(_rigidbody.linearVelocity.x, 0);
         _rigidbody.linearVelocity += Vector2.up * jumpForce;
-    }
-
-    private void EquipWeapon(WeaponType weaponType)
-    {
-        if (swordWeapon != null)
-            swordWeapon.gameObject.SetActive(weaponType == WeaponType.Sword);
-
-        if (gunWeapon != null)
-            gunWeapon.gameObject.SetActive(weaponType == WeaponType.Guns);
-
-        if (weaponType == WeaponType.Guns && gunWeapon != null)
-        {
-            currentWeapon = gunWeapon;
-            return;
-        }
-
-        if (weaponType == WeaponType.Sword && swordWeapon != null)
-        {
-            currentWeapon = swordWeapon;
-            return;
-        }
-
-        currentWeapon = swordWeapon != null ? swordWeapon : gunWeapon;
     }
 
     bool IsGrounded()

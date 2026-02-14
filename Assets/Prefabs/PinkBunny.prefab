@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2517550202840906648}
   - component: {fileID: 2444616278775592237}
   m_Layer: 0
-  m_Name: Playah
+  m_Name: PinkBunny
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,12 +86,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 6724232227250092636, guid: 25729075290cc0348bb22627c10a633d, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: -4349496651015925248, guid: f52f072aa624842e29c1e09fec41a3b7, type: 3}
+  m_Color: {r: 1, g: 0.24528301, b: 0.88014364, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.125, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -119,8 +119,7 @@ MonoBehaviour:
   jumpForce: 5
   dashSpeed: 20
   groundCheckDist: 0.5
-  swordWeapon: {fileID: 2242503456746934965, guid: 77e232007bd9543d39f03f10fc9bd7da, type: 3}
-  gunWeapon: {fileID: 4559380612456102200, guid: ef3b6f093a2e24fd488a3bc80bf571cb, type: 3}
+  weapon: {fileID: 2242503456746934965, guid: 77e232007bd9543d39f03f10fc9bd7da, type: 3}
 --- !u!61 &2517550202840906648
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -160,7 +159,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
     oldSize: {x: 1.125, y: 2}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 1.125, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
