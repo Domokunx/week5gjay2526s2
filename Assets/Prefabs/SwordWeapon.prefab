@@ -44,3 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc08e1ba64974e849d2ee1fb47d1617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwordWeapon
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 8
+  attackWidth: 1.5
+  attackHeight: 1.5
+  damage: 50

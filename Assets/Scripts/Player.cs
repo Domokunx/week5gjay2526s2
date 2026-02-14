@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private InputActionAsset actionAsset;
     public LayerMask groundLayer;
     public Transform shootPoint;
+    public Transform groundCheck;
     
     private InputActionMap movementMap;
     private InputAction moveAction;
@@ -144,7 +145,7 @@ public class Player : MonoBehaviour
     bool IsGrounded()
     {
         _rigidbody.gravityScale = 0;
-        return Physics2D.Raycast(transform.position, Vector2.down, groundCheckDist, groundLayer);
+        return Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDist, groundLayer);
     }
 
     private void OnDisable()
