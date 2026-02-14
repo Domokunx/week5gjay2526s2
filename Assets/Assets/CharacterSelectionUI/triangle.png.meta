@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0621b716c271f4e2fba543a6799f99f8
+guid: 28b2734ae1b994ce397276c978b77bd4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2329984378675057905
-    second: rabbitBlue_front_0
+      213: 9164359298635338950
+    second: triangle_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: rabbitBlue_front_0
+      name: triangle_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 0
-        width: 20
-        height: 32
+        x: 49
+        y: 78
+        width: 302
+        height: 243
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f0b2dd86d8b3aafd0800000000000000
-      internalID: -2329984378675057905
+      spriteID: 6c4153d2a385e2f70800000000000000
+      internalID: 9164359298635338950
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      rabbitBlue_front_0: -2329984378675057905
+      triangle_0: 9164359298635338950
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
